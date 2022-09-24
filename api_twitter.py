@@ -1,4 +1,6 @@
+from base64 import encode
 import config
+import json 
 import tweepy
 import time
 client = tweepy.Client(bearer_token=config.BEARER_TOKEN,
@@ -15,9 +17,12 @@ auth = tweepy.OAuth1UserHandler(config.API_KEY,
 
 api = tweepy.API(auth)
 
-search_terms = ["putin"]
+search_terms = ["bolsonaro","lula"]
 
 #email
+
+json_api = json.loads("{}")
+
 
 
 class MyStream(tweepy.StreamingClient):
@@ -25,7 +30,12 @@ class MyStream(tweepy.StreamingClient):
         print("connected!")
     def on_tweet(self, tweet):
         if tweet.referenced_tweets==None:
-            print("original tweet> ",tweet.data)
+            json_api["tweet_id"] = tweet.data["id"]
+            json_api["tweet_created_at"] = tweet.created_at
+            json_api["tweet_author_id"] = tweet.author_id
+            json_api["tweet_text"] = tweet.data["text"]
+            json_api["tweet_lang"] = tweet.lang
+            print(json_api)
             time.sleep(1)
 
 stream = MyStream(bearer_token=config.BEARER_TOKEN)
@@ -33,7 +43,6 @@ stream = MyStream(bearer_token=config.BEARER_TOKEN)
 #delete previous rules!
 rules = stream.get_rules()
 for i in rules.data:
-    print(i.id)
     stream.delete_rules(ids=i.id)
 
 #add rules
