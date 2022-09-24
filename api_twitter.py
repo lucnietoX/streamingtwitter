@@ -2,6 +2,7 @@ from base64 import encode
 import config
 import json 
 import tweepy
+import pykafka
 import time
 client = tweepy.Client(bearer_token=config.BEARER_TOKEN,
                        api_key=config.API_KEY,
@@ -26,8 +27,12 @@ json_api = json.loads("{}")
 
 
 class MyStream(tweepy.StreamingClient):
+    
     def on_connect(self):
         print("connected!")
+        self.client = pykafka.KafkaClient("localhost:9092")
+        self.producer = self.client.topics[bytes("ktwitter","UTF-8")].get_producer()
+
     def on_tweet(self, tweet):
         if tweet.referenced_tweets==None:
             json_api["tweet_id"] = tweet.data["id"]
@@ -36,6 +41,8 @@ class MyStream(tweepy.StreamingClient):
             json_api["tweet_text"] = tweet.data["text"]
             json_api["tweet_lang"] = tweet.lang
             print(json_api)
+            # push data to producer
+            self.producer.produce(bytes(json.dumps(json_api),'UTF-8'))
             time.sleep(1)
 
 stream = MyStream(bearer_token=config.BEARER_TOKEN)
