@@ -15,33 +15,33 @@ auth = tweepy.OAuth1UserHandler(config.API_KEY,
 
 api = tweepy.API(auth)
 
-search_terms = ["bolsonaro"]
+search_terms = ["putin"]
+
+#email
+
 
 class MyStream(tweepy.StreamingClient):
     def on_connect(self):
         print("connected!")
     def on_tweet(self, tweet):
         if tweet.referenced_tweets==None:
-            print("original tweet> ",tweet.text)
-            time.sleep(0.2)
+            print("original tweet> ",tweet.data)
+            time.sleep(1)
 
 stream = MyStream(bearer_token=config.BEARER_TOKEN)
 
 #delete previous rules!
 rules = stream.get_rules()
-
-for term in search_terms:
-    stream.add_rules(tweepy.StreamRule(term))
-
-stream.filter(tweet_fields=["referenced_tweets"])
-
-
-
-
-
 for i in rules.data:
     print(i.id)
     stream.delete_rules(ids=i.id)
+
+#add rules
+for term in search_terms:
+    stream.add_rules(tweepy.StreamRule(term))
+
+#streaming data
+stream.filter(tweet_fields=["referenced_tweets"])
 
 #searching last tweets (100)
 #query = "lisboa"
