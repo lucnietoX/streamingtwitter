@@ -40,7 +40,6 @@ class MyStream(tweepy.StreamingClient):
             json_api["tweet_author_id"] = tweet.author_id
             json_api["tweet_text"] = tweet.data["text"]
             json_api["tweet_lang"] = tweet.lang
-            print(json_api)
             # push data to producer
             self.producer.produce(bytes(json.dumps(json_api),'UTF-8'))
             time.sleep(1)
