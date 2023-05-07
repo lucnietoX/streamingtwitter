@@ -17,7 +17,7 @@ To use these scripts, you will need the following:
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/twitter-kafka-mongodb.git
+   git clone https://github.com/lucnietoX/streamingtwitter.git
    
 Create a Twitter developer account and create a new app to get the required API keys and access tokens.
 
