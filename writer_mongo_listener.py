@@ -33,5 +33,6 @@ for message in consumer:
               word_count[word] += 1
         word_list = [{'word': word, 'count': count} for word, count in word_count.items()]
         json_string = json.dumps(word_list)
-        mongo_collection_count.insert_one(json_string)
+        for i in word_list:
+           mongo_collection_count.insert_one(i)
         
