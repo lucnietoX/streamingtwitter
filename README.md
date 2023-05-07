@@ -14,15 +14,15 @@ To use these scripts, you will need the following:
 
 ## Installation
 
-1. Clone this repository to your local machine:
+1. Clone this repository to your local machine and install the libraries:
 
    ```bash
    git clone https://github.com/lucnietoX/streamingtwitter.git
    
-Create a Twitter developer account and create a new app to get the required API keys and access tokens.
+2. Create a Twitter developer account and create a new app to get the required API keys and access tokens.
 
-Create a MongoDB database and collection to store the Twitter data.
+3. Create a MongoDB database and collection to store the Twitter data.
 
-Create a Kafka topic to receive the Twitter data.
+4. Create a Kafka topic to receive the Twitter data.
 
-Update the config.py file with your Twitter API keys, access tokens, MongoDB connection details, and Kafka topic name.
+5. Update the config.py file with your Twitter API keys, access tokens, MongoDB connection details, and Kafka topic name.
