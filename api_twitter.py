@@ -18,7 +18,7 @@ auth = tweepy.OAuth1UserHandler(config.API_KEY,
 
 api = tweepy.API(auth)
 
-search_terms = ["bolsonaro","lula"]
+search_terms = ["apple","samsung"]
 
 #email
 
